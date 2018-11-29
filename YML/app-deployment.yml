@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: application-deployment
+  labels:
+    name: frontend-deployment
+    app: 2-tier-app
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      name: login
+      tier: frontend
+  template:
+    metadata:
+      name: login-pod
+      labels:
+        name: login
+        tier: frontend
+    spec:
+      containers:
+        - name: login-application
+          image: akshay77/login:2.1
+          ports:
+          - containerPort: 8080
+          readinessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 20

@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: database-deployment
+  labels:
+    app: 2-tier-app
+    name: backend-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: mysql-db
+      tier: backend
+  template:
+    metadata:
+      name: mysql-pod
+      labels:
+        name: mysql-db
+        tier: backend
+    spec:
+      containers:
+        - name: mysql
+          image: akshay77/mysql:1.2
+          env:
+          - name: MYSQL_ROOT_PASSWORD
+            value: Mind@123
+          ports:
+          - containerPort: 3306
+          volumeMounts:
+          - name: persistent-volume
+            mountPath: /var/lib/mysql
+      nodeSelector:
+        type: database
+      volumes:
+      - name: persistent-volume
+        hostPath:
+          path: /var/mysql_bkup
+          type: DirectoryOrCreate
