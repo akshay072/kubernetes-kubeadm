@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: login-application
-          image: akshay77/login:2.1
+          image: akshay77/webapp:1.1
           ports:
           - containerPort: 8080
           readinessProbe:
