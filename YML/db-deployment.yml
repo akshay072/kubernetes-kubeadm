@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: mysql
-          image: akshay77/mysql:1.2
+          image: akshay77/mysql:1.4
           env:
           - name: MYSQL_ROOT_PASSWORD
             value: Mind@123
